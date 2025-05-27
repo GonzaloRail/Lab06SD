@@ -2,13 +2,11 @@
     Document   : productos
     Created on : May 26, 2025
     Author     : user
-    Description: Página para comprar productos
+    Description: Página para comprar productos - SOLO validación JSP
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page errorPage="error.jsp" %>
-<%@page import="java.util.List" %>
-<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,42 +130,13 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .mensaje-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
         .logout {
             float: right;
             margin-top: -10px;
         }
     </style>
     <script>
-        function validarFormulario() {
-            var cantidades = document.querySelectorAll('input[type="number"]');
-            var errores = [];
-            
-            for (var i = 0; i < cantidades.length; i++) {
-                var valor = parseInt(cantidades[i].value);
-                if (valor < 0) {
-                    errores.push("No se permiten cantidades negativas en " + cantidades[i].name.replace("Cantidad", ""));
-                }
-            }
-            
-            if (errores.length > 0) {
-                // Crear URL con parámetros de error
-                var url = "error.jsp?";
-                for (var j = 0; j < errores.length; j++) {
-                    url += "mensajes=" + encodeURIComponent(errores[j]);
-                    if (j < errores.length - 1) url += "&";
-                }
-                window.location.href = url;
-                return false;
-            }
-            
-            return true;
-        }
-        
+        // SOLO función para calcular total - SIN validaciones
         function calcularTotal() {
             var total = 0;
             var cantPan = parseInt(document.getElementById('cantidadPan').value) || 0;
@@ -175,6 +144,7 @@
             var cantPlatanos = parseInt(document.getElementById('cantidadPlatanos').value) || 0;
             var cantNaranjas = parseInt(document.getElementById('cantidadNaranjas').value) || 0;
             
+            // Calcular sin validar (permite negativos)
             total += cantPan * 0.50;
             total += cantQueso * 2.50;
             total += cantPlatanos * 0.40;
@@ -213,7 +183,8 @@
             %>
         </div>
 
-        <form action="resultado.jsp" method="post" onsubmit="return validarFormulario()">
+        <!-- FORMULARIO SIN VALIDACIONES - Solo envía a resultado.jsp -->
+        <form action="resultado.jsp" method="post">
             <div class="productos-grid">
                 <div class="producto-card">
                     <div class="producto-icon">🍞</div>
@@ -222,7 +193,7 @@
                     <div class="form-group">
                         <label for="cantidadPan">Cantidad:</label>
                         <input type="number" id="cantidadPan" name="CantidadPan" 
-                               min="0" value="0" onchange="calcularTotal()">
+                               value="0" onchange="calcularTotal()">
                     </div>
                 </div>
 
@@ -233,7 +204,7 @@
                     <div class="form-group">
                         <label for="cantidadQueso">Cantidad:</label>
                         <input type="number" id="cantidadQueso" name="CantidadQueso" 
-                               min="0" value="0" onchange="calcularTotal()">
+                               value="0" onchange="calcularTotal()">
                     </div>
                 </div>
 
@@ -244,7 +215,7 @@
                     <div class="form-group">
                         <label for="cantidadPlatanos">Cantidad:</label>
                         <input type="number" id="cantidadPlatanos" name="CantidadPlatanos" 
-                               min="0" value="0" onchange="calcularTotal()">
+                               value="0" onchange="calcularTotal()">
                     </div>
                 </div>
 
@@ -254,6 +225,7 @@
                     <div class="producto-precio">S/. 0.60 por unidad</div>
                     <div class="form-group">
                         <label for="cantidadNaranjas">Cantidad:</label>
+                        <!-- SIN min="0" - permite valores negativos -->
                         <input type="number" id="cantidadNaranjas" name="CantidadNaranjas" 
                                value="0" onchange="calcularTotal()">
                     </div>
@@ -265,6 +237,7 @@
             </div>
 
             <div class="form-actions">
+                <!-- Botón envía DIRECTAMENTE sin validaciones JavaScript -->
                 <button type="submit" class="btn">🛍️ Procesar Compra</button>
                 <a href="login.jsp" class="btn btn-secondary">🏠 Volver al Login</a>
             </div>

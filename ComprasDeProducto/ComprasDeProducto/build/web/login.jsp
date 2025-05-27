@@ -2,7 +2,7 @@
     Document   : login
     Created on : May 26, 2025
     Author     : user
-    Description: Página de login del sistema
+    Description: Página de login del sistema - SIN VALIDACIONES
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -138,20 +138,24 @@
             }
         %>
 
-        <form action="LoginServlet" method="post">
+        <!-- FORMULARIO SIN VALIDACIONES - Permite enviar campos vacíos -->
+        <form action="validar_login.jsp" method="post">
             <div class="form-group">
                 <label for="usuario">Usuario:</label>
-                <input type="text" id="usuario" name="usuario" required 
+                <!-- SIN required - permite enviar vacío -->
+                <input type="text" id="usuario" name="usuario" 
                        placeholder="Ingrese su usuario" 
                        value="<%= request.getParameter("usuario") != null ? request.getParameter("usuario") : "" %>">
             </div>
             
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required 
+                <!-- SIN required - permite enviar vacío -->
+                <input type="password" id="password" name="password" 
                        placeholder="Ingrese su contraseña">
             </div>
             
+            <!-- Botón envía SIEMPRE sin validaciones -->
             <button type="submit" class="btn">Iniciar Sesión</button>
         </form>
 
@@ -163,6 +167,7 @@
             <p><strong>Usuarios de prueba:</strong></p>
             <p>admin / admin123</p>
             <p>usuario / user123</p>
+            <p><em>Puede enviar campos vacíos para probar errores</em></p>
         </div>
     </div>
 </body>
